@@ -6,7 +6,8 @@ import '../utils/basic_imports.dart';
 
 class GoalsContainer extends StatelessWidget {
   const GoalsContainer({
-    Key ,key,
+    Key,
+    key,
     required this.goals,
     required this.isFirstGradient,
   }) : super(key: key);
@@ -34,11 +35,11 @@ class GoalsContainer extends StatelessWidget {
                       'Goals:',
                       style: CustomStyle.balanceTxtStyle,
                     ),
-                     SizedBox(height: 8.h),
+                    SizedBox(height: 8.h),
                     Row(
                       children: [
                         Text(
-                          NumberFormat('#,##,###').format(goals) + ' DA',
+                          NumberFormat('#,###').format(goals) + ' DA',
                           style: CustomStyle.balanceAmount,
                         ),
                       ],
@@ -53,7 +54,10 @@ class GoalsContainer extends StatelessWidget {
                         ),
                         Text(
                           'Laptop',
-                          style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold),
                         ),
                       ],
                     )
@@ -84,8 +88,7 @@ class GoalsContainer extends StatelessWidget {
                     value: 0.8,
                     minHeight: 28,
                     backgroundColor: Colors.grey,
-                    valueColor:
-                    AlwaysStoppedAnimation<Color>(Colors.orange),
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
                   ),
                 ),
                 Positioned(
@@ -112,29 +115,29 @@ class GoalsContainer extends StatelessWidget {
       borderRadius: BorderRadius.circular(16.0),
       gradient: isFirstGradient
           ? LinearGradient(
-        colors: [
-          const Color(0xFF00494C).withOpacity(0.8),
-          const Color(0xFF00686C).withOpacity(0.7),
-          const Color(0xFF00787D),
-          const Color(0xFF008C92).withOpacity(0.7),
-          const Color(0xFF00494C).withOpacity(0.8),
-        ],
-        stops: [0.0, 0.2, 0.5, 0.7, 1.0],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      )
+              colors: [
+                const Color(0xFF00494C).withOpacity(0.8),
+                const Color(0xFF00686C).withOpacity(0.7),
+                const Color(0xFF00787D),
+                const Color(0xFF008C92).withOpacity(0.7),
+                const Color(0xFF00494C).withOpacity(0.8),
+              ],
+              stops: [0.0, 0.2, 0.5, 0.7, 1.0],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            )
           : LinearGradient(
-        colors: [
-          const Color(0xFF00494C).withOpacity(0.8),
-          const Color(0xFF00686C).withOpacity(0.7),
-          const Color(0xFF00787D),
-          const Color(0xFF008C92).withOpacity(0.53),
-          const Color(0xFF00494C).withOpacity(0.8),
-        ],
-        stops: [0.0, 0.53, 0.7, 0.8, 1.0],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
+              colors: [
+                const Color(0xFF00494C).withOpacity(0.8),
+                const Color(0xFF00686C).withOpacity(0.7),
+                const Color(0xFF00787D),
+                const Color(0xFF008C92).withOpacity(0.53),
+                const Color(0xFF00494C).withOpacity(0.8),
+              ],
+              stops: [0.0, 0.53, 0.7, 0.8, 1.0],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
     );
   }
 }

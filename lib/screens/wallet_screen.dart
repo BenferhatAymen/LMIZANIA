@@ -39,82 +39,87 @@ class _WalletScreenState extends State<WalletScreen> {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _isSelectedPersonal = true;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(0, 60),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                      backgroundColor: _isSelectedPersonal
-                          ? TColor.themeColor
-                          : Colors.white,
-                    ),
-                    child: Text(
-                      'Personal',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: _isSelectedPersonal
-                            ? Colors.white
-                            : TColor.themeColor,
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _isSelectedPersonal = true;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(0, 60),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          backgroundColor: _isSelectedPersonal
+                              ? TColor.themeColor
+                              : Colors.white,
+                        ),
+                        child: Text(
+                          'Personal',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            color: _isSelectedPersonal
+                                ? Colors.white
+                                : TColor.themeColor,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _isSelectedPersonal = false;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(0, 60),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                      backgroundColor: !_isSelectedPersonal
-                          ? TColor.themeColor
-                          : Colors.white,
+                    SizedBox(
+                      width: 10,
                     ),
-                    child: Text(
-                      'Group',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: !_isSelectedPersonal
-                            ? Colors.white
-                            : TColor.themeColor,
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _isSelectedPersonal = false;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(0, 60),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          backgroundColor: !_isSelectedPersonal
+                              ? TColor.themeColor
+                              : Colors.white,
+                        ),
+                        child: Text(
+                          'Group',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            color: !_isSelectedPersonal
+                                ? Colors.white
+                                : TColor.themeColor,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Expanded(
+                child: _isSelectedPersonal
+                    ? PersonalWalletScreen()
+                    : GroupWalletView(),
+              ),
+            ],
           ),
-          SizedBox(
-            height: 15,
-          ),
-          Expanded(
-            child: _isSelectedPersonal
-                ? PersonalWalletScreen()
-                : GroupWalletView(),
-          ),
-        ],
+        ),
       ),
     );
   }

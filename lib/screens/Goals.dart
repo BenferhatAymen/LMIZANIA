@@ -1,4 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lmizania/cubits/get_all_goals_cubit/get_all_goals_cubit.dart';
 import 'package:lmizania/screens/add_goals.dart';
 import 'package:lmizania/screens/add_personal_goal.dart';
 import 'package:lmizania/utils/basic_imports.dart';
@@ -15,6 +17,12 @@ class Goals extends StatefulWidget {
 }
 
 class _GoalsState extends State<Goals> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<GetAllGoalsCubit>(context).getAllGoals();
+  }
+
   bool _isFirstGradient = true;
   int balance = 5200000;
   int goalsamount = 4800;
@@ -61,12 +69,24 @@ class _GoalsState extends State<Goals> {
                   ),
                 ],
               ),
-              ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: goals.length,
-                itemBuilder: (context, index) {
-                  return GoalListItem(goal: goals[index]);
+              BlocBuilder<GetAllGoalsCubit, GetAllGoalsState>(
+                builder: (context, state) {
+                  if (state is GetAllGoalsLoading) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state is GetAllGoalsSuccess) {
+                    return ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: state.goals.length,
+                      itemBuilder: (context, index) {
+                        return GoalListItem(
+                          goal: state.goals[index],
+                          index: index,
+                        );
+                      },
+                    );
+                  }
+                  return Text("Failed to load goals");
                 },
               ),
             ],

@@ -56,6 +56,13 @@ dependencies:
   vertical_percent_indicator: ^0.0.1
   flutter_lints: ^3.0.0
   flutter_svg: ^2.0.10+1
+  image_picker: ^1.1.2
+  flutter_bloc: ^8.1.5
+  shared_preferences: ^2.2.3
+  modal_progress_hud_nsn: ^0.5.1
+  dio: ^5.4.3+1
+  firebase_storage: ^11.7.7
+  firebase_core: ^2.32.0
 # The following section is specific to Flutter packages.
 flutter:
   assets:

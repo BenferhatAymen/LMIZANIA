@@ -5,6 +5,7 @@ import 'package:lmizania/group_screen/group_screen.dart';
 import 'package:lmizania/settings_view/settings_view.dart';
 import 'package:lmizania/utils/Group_card.dart';
 import 'package:lmizania/utils/segment_button.dart';
+import 'package:lmizania/widget/text_alert_dialog.dart';
 
 class GroupWalletView extends StatefulWidget {
   @override
@@ -19,10 +20,12 @@ class _GroupWalletViewState extends State<GroupWalletView> {
     {"name": "2cp4", "members": 20, "icon": "images/2cp5.png"},
     {"name": "2cp5", "members": 20, "icon": "images/2cp5.png"},
     {"name": "Estin Boys", "members": 16, "icon": "images/family.png"},
-    {"name": "Chabiba", "members": "3", "icon": "images/2cp5.png"},  {"name": "2cp4", "members": 20, "icon": "images/2cp5.png"},
+    {"name": "Chabiba", "members": "3", "icon": "images/2cp5.png"},
+    {"name": "2cp4", "members": 20, "icon": "images/2cp5.png"},
     {"name": "2cp5", "members": 20, "icon": "images/2cp5.png"},
     {"name": "Estin Boys", "members": 16, "icon": "images/family.png"},
-    {"name": "Chabiba", "members": "3", "icon": "images/2cp5.png"},  {"name": "2cp4", "members": 20, "icon": "images/2cp5.png"},
+    {"name": "Chabiba", "members": "3", "icon": "images/2cp5.png"},
+    {"name": "2cp4", "members": 20, "icon": "images/2cp5.png"},
     {"name": "2cp5", "members": 20, "icon": "images/2cp5.png"},
     {"name": "Estin Boys", "members": 16, "icon": "images/family.png"},
     {"name": "Chabiba", "members": "3", "icon": "images/2cp5.png"},
@@ -53,11 +56,13 @@ class _GroupWalletViewState extends State<GroupWalletView> {
                   Spacer(),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SettingsView(),
-                        ),
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return TextAlertDialog(
+                            onSave: () {},
+                          );
+                        },
                       );
                     },
                     child: Icon(

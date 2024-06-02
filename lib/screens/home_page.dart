@@ -1,13 +1,18 @@
 import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lmizania/cubits/get_all_transactions_cubit/get_all_transactions_cubit.dart';
 import 'package:lmizania/screens/all_transactions.dart';
 import 'package:lmizania/screens/new_transaction.dart';
+import 'package:lmizania/update_states.dart';
 import 'package:lmizania/utils/basic_imports.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import '../colors.dart';
+import '../cubits/set_wallet_cubit/set_wallet_cubit.dart';
 import '../model/transactions_model.dart';
 import '../widget/total_balance.dart';
 import '../widget/transaction_list_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lmizania/cubits/get_wallet/get_wallet_cubit.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -25,6 +30,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    updateHomeScreen(context);
     _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       setState(() {
         _isFirstGradient = !_isFirstGradient;
@@ -71,10 +77,13 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SizedBox(height: Dimensions.heightSize),
                 recentTransactions(),
-                SizedBox(height: Dimensions.heightSize),
+                SizedBox(height: 10),
                 Flexible(
                   fit: FlexFit.loose,
-                  child: TransactionListView(transactions: latestTransactions),
+                  child: TransactionListView(
+                    transactions: latestTransactions,
+                    isLatestTransactions: true,
+                  ),
                 ),
                 Container(
                   padding: EdgeInsets.only(bottom: 15, top: 15),
@@ -236,6 +245,7 @@ class _HomePageState extends State<HomePage> {
                     size: Dimensions.iconSizeLarge,
                   ),
                   onPressed: () {
+                    updateHomeScreen(context);
                     // Handle notifications here
                   },
                 ),

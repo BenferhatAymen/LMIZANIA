@@ -31,7 +31,6 @@ class Goal {
   }
 }
 
-
 // List of predefined goals
 List<Goal> goals = [
   Goal(
@@ -40,7 +39,8 @@ List<Goal> goals = [
     duration: '3 months',
     progressPercentage: 0.7,
     totalSavings: 235000,
-    depositedAmount: 164500, index: 1,
+    depositedAmount: 164500,
+    index: 1,
   ),
   Goal(
     title: 'Car',
@@ -48,7 +48,8 @@ List<Goal> goals = [
     duration: '10 months',
     progressPercentage: 0.5,
     totalSavings: 5200000,
-    depositedAmount:2600000, index: 2,
+    depositedAmount: 2600000,
+    index: 2,
   ),
   Goal(
     title: 'PS 5',
@@ -56,15 +57,15 @@ List<Goal> goals = [
     duration: '2 weeks',
     progressPercentage: 0.3,
     totalSavings: 150000,
-    depositedAmount: 45000, index: 3,
+    depositedAmount: 45000,
+    index: 3,
   ),
   Goal(
     title: 'FIFA 25',
     duration: '3 days',
     progressPercentage: 0.2,
     totalSavings: 9000,
-    depositedAmount: 1800, index: 4,
+    depositedAmount: 1800,
+    index: 4,
   ),
 ];
-
-

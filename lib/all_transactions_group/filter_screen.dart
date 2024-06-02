@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lmizania/all_transactions_group/categories_modal_bottom_sheet.dart';
 import 'package:lmizania/colors.dart';
 
@@ -185,7 +186,7 @@ class SortSegmentButton extends StatelessWidget {
           title,
           style: TextStyle(
               color: isSelected ? Colors.white : Colors.black,
-              fontSize: 16,
+              fontSize: 15.sp,
               fontWeight: FontWeight.w500),
         ),
       ),

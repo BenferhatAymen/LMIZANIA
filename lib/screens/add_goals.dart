@@ -1,9 +1,15 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lmizania/utils/basic_imports.dart';
 
 import '../widget/custom_appbar.dart';
 
-class AddGoalPage extends StatelessWidget {
+class AddGoalPage extends StatefulWidget {
+  @override
+  State<AddGoalPage> createState() => _AddGoalPageState();
+}
+
+class _AddGoalPageState extends State<AddGoalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,28 +28,34 @@ class AddGoalPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              height: 300.h,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(color: Colors.green),
-                color: Colors.white,
-              ),
-              child: Column(
-                mainAxisAlignment: mainCenter,
-                children: [
-                  Icon(
-                    Icons.attach_file,
-                    size: 100.sp,
-                    color: Colors.grey,
-                  ),
-                  SizedBox(height: Dimensions.heightSize),
-                  Text(
-                    'Add a photo of your goal',
-                    style: TextStyle(fontSize: 18.sp),
-                  ),
-                ],
+            GestureDetector(
+              onTap: () async {
+                ImagePicker imagePicker = ImagePicker();
+                XFile? image =await imagePicker.pickImage(source: ImageSource.gallery);
+              },
+              child: Container(
+                height: 300.h,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: Colors.green),
+                  color: Colors.white,
+                ),
+                child: Column(
+                  mainAxisAlignment: mainCenter,
+                  children: [
+                    Icon(
+                      Icons.attach_file,
+                      size: 100.sp,
+                      color: Colors.grey,
+                    ),
+                    SizedBox(height: Dimensions.heightSize),
+                    Text(
+                      'Add a photo of your goal',
+                      style: TextStyle(fontSize: 18.sp),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(height: Dimensions.heightSize),

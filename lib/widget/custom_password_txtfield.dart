@@ -6,12 +6,16 @@ class PasswordTextField extends StatefulWidget {
   final IconData? prefixIcon;
   final String hintText;
   final TextEditingController? controller;
+  Function(String)? onChanged;
+  String? Function(String?)? validator;
 
-  const PasswordTextField({
+  PasswordTextField({
     Key? key,
     this.prefixIcon,
     required this.hintText,
     this.controller,
+    this.onChanged,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -20,23 +24,21 @@ class PasswordTextField extends StatefulWidget {
 
 class _PasswordTextFieldState extends State<PasswordTextField> {
   bool _obscureText = true;
-  RegExp _passwordRegExp = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+
   bool _isPasswordValid = true;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 46.h,
-      child: TextField(
+    return Container(
+      child: TextFormField(
         controller: widget.controller,
         obscureText: _obscureText,
-        onChanged: (value) {
-          setState(() {
-            _isPasswordValid = _passwordRegExp.hasMatch(value);
-          });
-        },
+        onChanged: widget.onChanged,
+        validator: widget.validator,
         decoration: InputDecoration(
-          prefixIcon: Icon(widget.prefixIcon, color: _isPasswordValid ? CustomColors.strong : Colors.red),
+          contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+          prefixIcon: Icon(widget.prefixIcon,
+              color: _isPasswordValid ? CustomColors.strong : Colors.red),
           suffixIcon: InkWell(
             onTap: () {
               setState(() {
@@ -44,22 +46,30 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
               });
             },
             child: Icon(
-              !_isPasswordValid? Icons.info: _obscureText ? Icons.visibility_off : Icons.visibility,
-              color: !_isPasswordValid? Colors.red: CustomColors.strong,
+              !_isPasswordValid
+                  ? Icons.info
+                  : _obscureText
+                      ? Icons.visibility_off
+                      : Icons.visibility,
+              color: !_isPasswordValid ? Colors.red : CustomColors.strong,
             ),
           ),
           labelText: widget.hintText,
           labelStyle: TextStyle(color: CustomColors.strong),
-       //   errorText: _isPasswordValid ? null : 'Password must contain at least 1 uppercase, 1 lowercase, 1 digit, and be at least 8 characters long',
           filled: true,
           fillColor: Color(0xff00494c).withOpacity(0.15),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide( color: CustomColors.strong ),
+            borderSide: BorderSide(color: CustomColors.strong),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.red, width: 1),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide( color: !_isPasswordValid?Colors.red:  CustomColors.strong ),
+            borderSide: BorderSide(
+                color: !_isPasswordValid ? Colors.red : CustomColors.strong),
           ),
         ),
       ),

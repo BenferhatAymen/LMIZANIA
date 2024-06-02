@@ -17,6 +17,10 @@ class AddGoalScreen extends StatefulWidget {
 }
 
 class _AddGoalScreenState extends State<AddGoalScreen> {
+    final TextEditingController goalNameController = TextEditingController();
+  final TextEditingController goalPriceController = TextEditingController();
+  final TextEditingController goalDescriptionController =
+      TextEditingController();
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
@@ -78,16 +82,42 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                 height: 15,
               ),
               InputSection(
-                  inputTitle: "Goal name", hintText: "Write your goal name"),
+                inputTitle: "Goal name",
+                hintText: "Write your goal name",
+                controller: goalNameController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a goal name';
+                  }
+                  return null;
+                },
+              ),
               InputSection(
                 inputTitle: "Goal price",
                 hintText: "Write your goal price",
                 keyboardType: TextInputType.numberWithOptions(),
+                controller: goalPriceController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a goal price';
+                  }
+                  if (int.tryParse(value) == null) {
+                    return 'Please enter a valid integer';
+                  }
+                  return null;
+                },
               ),
               InputSection(
                 inputTitle: "Goal description",
                 hintText: "Write your goal description",
                 keyboardType: TextInputType.multiline,
+                controller: goalDescriptionController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a goal description';
+                  }
+                  return null;
+                },
               ),
               SizedBox(
                 height: 20,

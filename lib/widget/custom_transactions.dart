@@ -1,6 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:lmizania/utils/basic_imports.dart';
+
 class CustomTransactionContainer extends StatelessWidget {
   final String label;
   final int amount;
@@ -21,18 +22,17 @@ class CustomTransactionContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
-    return Container(            padding: EdgeInsets.only(left: 4,right: 4,bottom: 1),
-
+    return Container(
+      padding: EdgeInsets.only(left: 4, right: 4, bottom: 1),
       width: 165.r,
       decoration: BoxDecoration(
-        color:Colors.white.withOpacity(0.24),
+        color: Colors.white.withOpacity(0.24),
         borderRadius: const BorderRadius.all(Radius.circular(16)),
-
       ),
       child: Row(
         children: [
           Container(
-             alignment: Alignment.center,
+            alignment: Alignment.center,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(50)),
               color: iconColor,
@@ -42,8 +42,7 @@ class CustomTransactionContainer extends StatelessWidget {
               child: Icon(
                 icon,
                 color: Colors.white,
-                size:
-                35,
+                size: 35,
               ),
             ),
           ),
@@ -57,7 +56,13 @@ class CustomTransactionContainer extends StatelessWidget {
               ),
               Text(
                 NumberFormat('#,###').format(amount) + ' DA',
-                style: CustomStyle.balance2TxtStyle,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: amount.toString().length > 7
+                      ? 15 * (7 / amount.toString().length)
+                      : 15,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lmizania/colors.dart';
+import 'package:lmizania/cubits/delete_goal_cubit/delete_goal_cubit.dart';
+import 'package:lmizania/data/models/goal_model.dart';
+import 'package:lmizania/update_states.dart';
 import 'package:lmizania/utils/custom_text_field.dart';
 import 'package:lmizania/utils/filter_row.dart';
 import 'package:lmizania/utils/group_card.dart';
@@ -14,9 +18,25 @@ import 'package:lmizania/utils/transaction_section.dart';
 class EditPersonalGoalScreen extends StatefulWidget {
   @override
   State<EditPersonalGoalScreen> createState() => _EditPersonalGoalScreenState();
+
+  GoalModel goal;
+  EditPersonalGoalScreen({required this.goal});
 }
 
 class _EditPersonalGoalScreenState extends State<EditPersonalGoalScreen> {
+  late final TextEditingController goalNameController;
+  late final TextEditingController goalPriceController;
+  late final TextEditingController goalDescriptionController;
+  @override
+  void initState() {
+    super.initState();
+    goalNameController = TextEditingController(text: widget.goal.name);
+    goalPriceController =
+        TextEditingController(text: widget.goal.targetAmount.toString());
+    goalDescriptionController =
+        TextEditingController(text: widget.goal.description);
+  }
+
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
@@ -42,8 +62,8 @@ class _EditPersonalGoalScreenState extends State<EditPersonalGoalScreen> {
             children: [
               Container(
                 alignment: Alignment.center,
-                height: media.width * 0.9,
-                width: media.width * 0.9,
+                height: media.width * 0.82,
+                width: media.width * 0.82,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
@@ -63,22 +83,42 @@ class _EditPersonalGoalScreenState extends State<EditPersonalGoalScreen> {
                 height: 15,
               ),
               InputSection(
-                  inputTitle: "Goal name",
-                  hintText: "Write your goal name",
-                  initialValue: "Laptop"),
+                inputTitle: "Goal name",
+                hintText: "Write your goal name",
+                controller: goalNameController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a goal name';
+                  }
+                  return null;
+                },
+              ),
               InputSection(
                 inputTitle: "Goal price",
                 hintText: "Write your goal price",
                 keyboardType: TextInputType.numberWithOptions(),
-                suffixText: "DA",
-                initialValue: "140000",
+                controller: goalPriceController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a goal price';
+                  }
+                  if (int.tryParse(value) == null) {
+                    return 'Please enter a valid integer';
+                  }
+                  return null;
+                },
               ),
               InputSection(
                 inputTitle: "Goal description",
                 hintText: "Write your goal description",
                 keyboardType: TextInputType.multiline,
-                initialValue:
-                "ASUS CREATOR LAPTOP Q OLED that has 16 ram, 512 ssd, gtx 1050 graphics, 14’ screen.",
+                controller: goalDescriptionController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a goal description';
+                  }
+                  return null;
+                },
               ),
               SizedBox(
                 height: 20,
@@ -119,7 +159,14 @@ class _EditPersonalGoalScreenState extends State<EditPersonalGoalScreen> {
                     child: Container(
                       height: 60,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          BlocProvider.of<DeleteGoalCubit>(context).deleteGoal(
+                            id: widget.goal.id!,
+                          );
+                          await Future.delayed(Duration(milliseconds: 200));
+                          updateGoalsScreen(context);
+                          updateHomeScreen(context);
+
                           Navigator.pop(context);
                         },
                         child: Row(

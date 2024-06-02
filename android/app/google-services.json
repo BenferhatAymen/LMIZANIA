@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "679935577362",
+    "project_id": "lmizania-project",
+    "storage_bucket": "lmizania-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679935577362:android:2d21a5145a539f11bbf7cb",
+        "android_client_info": {
+          "package_name": "com.example.lmizania"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5Hilk0jtHcp447sD0LXvOAOzCkN0H9hA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

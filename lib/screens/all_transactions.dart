@@ -41,11 +41,9 @@ class _AllTransactionsState extends State<AllTransactions> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Flexible(
-                  fit: FlexFit.loose,
-                  child: TransactionListView(transactions: widget.transactions),
-                ),
+                child: TransactionListView(transactions: widget.transactions),
               ),
+              SizedBox(height: 20.h),
             ],
           ),
         ),
@@ -197,14 +195,10 @@ Widget buildAppBar(VoidCallback onPressed) {
         ),
         centerTitle: true,
         leading: Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-              onPressed;
-            },
-          ),
-        ),
+            padding: const EdgeInsets.only(top: 20),
+            child: BackButton(
+              color: Colors.white,
+            )),
         title: const Padding(
           padding: EdgeInsets.only(top: 20),
           child: Text(

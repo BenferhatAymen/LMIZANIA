@@ -104,7 +104,7 @@ class _SavingsState extends State<Savings> {
                         lineWidth: 20.w,
                         percent: 0.6,
                         center: Text(
-                            NumberFormat('#,##,###').format(savingAmount) +
+                            NumberFormat('#,###').format(savingAmount) +
                                 ' DA',
                             style: GoogleFonts.openSans(
                               fontSize: 24.sp,

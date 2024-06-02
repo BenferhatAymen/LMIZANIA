@@ -18,9 +18,12 @@ class CustomElevatedButton extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: ElevatedButton(
-        onPressed: isValid ? onPressed : null, // Use isValid to determine onPressed callback
+        onPressed: isValid
+            ? onPressed
+            : null, // Use isValid to determine onPressed callback
         style: ElevatedButton.styleFrom(
-          backgroundColor: isValid ? CustomColors.btnColor : CustomColors.subtextGrey,
+          backgroundColor:
+              isValid ? CustomColors.btnColor : CustomColors.subtextGrey,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
