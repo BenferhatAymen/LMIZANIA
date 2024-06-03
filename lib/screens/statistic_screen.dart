@@ -1,4 +1,8 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lmizania/data/models/category_model.dart';
+import 'package:lmizania/data/models/transaction_models.dart';
+import 'package:lmizania/screens/bar_chart.dart';
+import 'package:lmizania/screens/pie_chart.dart';
 import 'package:lmizania/utils/basic_imports.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -13,8 +17,189 @@ class _StatisticsPageState extends State<StatisticsPage> {
   String _selectedDate = '5 October 2024'; // Initial selected date
   bool isDropdownOpened = false;
   List<bool> isSelected = [true, false];
+  bool isIncome = true;
+  int categoryInitialLabelindex = 0;
+  List<CategoryModel> expenseCategories = [
+    CategoryModel(name: 'Food', amount: 100),
+    CategoryModel(name: 'Transport', amount: 200),
+    CategoryModel(name: 'Entertainment', amount: 300),
+    CategoryModel(name: 'Health', amount: 400),
+    CategoryModel(name: 'Education', amount: 500),
+    CategoryModel(name: 'Shopping', amount: 600),
+    CategoryModel(name: 'Others', amount: 700),
+  ];
+  List<CategoryModel> incomeCategories = [
+    CategoryModel(name: 'Salary', amount: 100),
+    CategoryModel(name: 'College', amount: 200),
+    CategoryModel(name: 'Loan', amount: 300),
+  ];
+
+  List<TransactionModel> incomeTransactions = [
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 20,
+      date: "04-04-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 30,
+      date: "02-03-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 40,
+      date: "04-04-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 40,
+      date: "02-03-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 40,
+      date: "02-02-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 40,
+      date: "02-02-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 40,
+      date: "02-11-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 40,
+      date: "02-01-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 40,
+      date: "02-09-2024",
+      category: "Food",
+      id: "1",
+    ),
+  ];
+  var expenseTransactions = [
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 20,
+      date: "04-01-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 30,
+      date: "02-02-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 40,
+      date: "04-05-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 40,
+      date: "02-06-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 40,
+      date: "02-07-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 40,
+      date: "02-08-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 40,
+      date: "02-11-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 40,
+      date: "02-011-2024",
+      category: "Food",
+      id: "1",
+    ),
+    TransactionModel(
+      name: "hmida",
+      type: "income",
+      amount: 40,
+      date: "02-12-2024",
+      category: "Food",
+      id: "1",
+    ),
+  ];
+  final List<Color> progressBarColors = [
+    Colors.blue,
+    Colors.green,
+    Colors.red,
+    Colors.orange,
+    Colors.purple,
+    Colors.cyanAccent,
+    Colors.yellowAccent,
+    Colors.teal,
+    Colors.brown,
+    Colors.indigoAccent,
+    Colors.pink,
+    Colors.lightGreen
+  ];
   @override
   Widget build(BuildContext context) {
+    List<CategoryModel> categories = incomeCategories;
+
     return Scaffold(
       backgroundColor: CustomColors.bg,
       appBar: PreferredSize(
@@ -32,50 +217,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 height: Dimensions.heightSize,
               ),
               Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(25.r)),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back_ios),
-                      onPressed: () {
-                        // Handle back button tap
-                      },
-                    ),
-                    DropdownButton<String>(
-                      elevation: 0,
-                      borderRadius: null,
-                      value: _selectedDate,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _selectedDate = newValue!;
-                        });
-                      },
-                      items: <String>['5 October 2024', '6 October 2024']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios),
-                      onPressed: () {
-                        // Handle forward button tap
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: Dimensions.heightSize,
-              ),
-              Container(
+                padding: EdgeInsets.only(bottom: 20),
                 decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(
@@ -88,49 +230,11 @@ class _StatisticsPageState extends State<StatisticsPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // Normal Dropdown aligned to the start
-                        Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(25)),
-                                border: Border.all(color: Colors.grey),
-                              ),
-                              child: Row(
-                                children: [
-                                  SizedBox(width: 5),
-                                  DropdownButton<String>(
-                                    underline: Container(
-                                      height: 0,
-                                      color: Colors
-                                          .transparent, // Change this to your desired underline color
-                                    ),
-                                    value:
-                                        isDropdownOpened ? 'Compare' : 'Normal',
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        isDropdownOpened = !isDropdownOpened;
-                                      });
-                                    },
-                                    items: <String>['Normal', 'Compare']
-                                        .map<DropdownMenuItem<String>>(
-                                            (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                        Spacer(),
                         ToggleButtons(
                           children: const [
                             Icon(
-                              Icons.line_axis,
+                              Icons.bar_chart,
                             ),
                             Icon(
                               Icons.pie_chart,
@@ -165,7 +269,22 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     height: Dimensions.heightSize,
                   ),
                   // Conditionally render the chart based on selection
-                  isSelected[0] ? linedchart() : pichart(),
+                  SizedBox(
+                    height: 250,
+                    child: isSelected[0]
+                        ? BarChartWidget(
+                            transactions: (categoryInitialLabelindex == 0)
+                                ? incomeTransactions
+                                : expenseTransactions,
+                            isIncome:
+                                (categoryInitialLabelindex == 0 ? true : false),
+                          )
+                        : PieChartWidget(
+                            categories: (categoryInitialLabelindex == 0)
+                                ? incomeCategories
+                                : expenseCategories,
+                          ),
+                  ),
                 ]),
               ),
               SizedBox(
@@ -189,12 +308,20 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     activeFgColor: Colors.white,
                     inactiveBgColor: Colors.grey[300],
                     inactiveFgColor: Colors.black,
-                    initialLabelIndex: 1,
+                    initialLabelIndex: categoryInitialLabelindex,
                     totalSwitches: 2,
                     labels: const ['Income', 'Expense'],
                     radiusStyle: true,
                     onToggle: (index) {
                       print('switched to: $index');
+                      setState(() {
+                        categoryInitialLabelindex = index!;
+                        if (categoryInitialLabelindex == 0) {
+                          categories = incomeCategories;
+                        } else {
+                          categories = expenseCategories;
+                        }
+                      });
                     },
                   ),
                 ),
@@ -205,13 +332,16 @@ class _StatisticsPageState extends State<StatisticsPage> {
               Container(
                 color: Colors.white,
                 child: Column(
-                  children: [
-                    _buildCategoryItem(
-                        'Internet', 100, Colors.green, Colors.green),
-                    _buildCategoryItem('Car', 200, Colors.blue, Colors.blue),
-                    _buildCategoryItem(
-                        'Home', 300, Colors.yellow, Colors.yellow),
-                  ],
+                  children: categories
+                      .map((category) => _buildCategoryItem(
+                            category.name!,
+                            category.amount!.toDouble(),
+                            progressBarColors[categories.indexOf(category) %
+                                progressBarColors.length],
+                            progressBarColors[categories.indexOf(category) %
+                                progressBarColors.length],
+                          ))
+                      .toList(),
                 ),
               ),
             ],

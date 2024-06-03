@@ -29,7 +29,7 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           expands: true,
           style: TextStyle(
-              color: Colors.black, fontSize: 15, fontWeight: FontWeight.w400),
+              color: Colors.black, fontSize: 18, fontWeight: FontWeight.w400),
           keyboardType: keyboardType,
           initialValue: initialValue ?? null,
           maxLines: null,

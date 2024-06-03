@@ -110,10 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         text: 'Login',
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            // Handle login logic here
                             BlocProvider.of<LoginCubit>(context)
                                 .LoginUser(email: email!, password: password!);
-                           }
+                          }
                         },
                         isValid: true,
                       ),

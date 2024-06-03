@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lmizania/cubits/get_all_transactions_cubit/get_all_transactions_cubit.dart';
 import 'package:lmizania/screens/all_transactions.dart';
+import 'package:lmizania/screens/bar_chart.dart';
+import 'package:lmizania/screens/bar_screen.dart';
 import 'package:lmizania/screens/new_transaction.dart';
 import 'package:lmizania/update_states.dart';
 import 'package:lmizania/utils/basic_imports.dart';
@@ -245,8 +247,9 @@ class _HomePageState extends State<HomePage> {
                     size: Dimensions.iconSizeLarge,
                   ),
                   onPressed: () {
-                    updateHomeScreen(context);
+                    // updateHomeScreen(context);
                     // Handle notifications here
+                    
                   },
                 ),
               ],

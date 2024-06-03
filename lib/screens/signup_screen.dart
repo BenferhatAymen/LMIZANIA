@@ -134,11 +134,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         text: 'Sign Up',
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            BlocProvider.of<RegisterCubit>(context)
+                            if(_agreeToTerms){
+                              BlocProvider.of<RegisterCubit>(context)
                                 .RegisterUser(
                                     email: email!,
                                     password: password!,
                                     fullName: fullName!);
+                            }else{
+                                        showSnackBar(context, "Please agree to terms of use");
+
+                            }
                           }
                         },
                         isValid: true,

@@ -9,7 +9,6 @@ import '../utils/custom_colors.dart';
 class EnterOTPScreen extends StatefulWidget {
   const EnterOTPScreen();
 
-
   @override
   _EnterOTPScreenState createState() => _EnterOTPScreenState();
 }
@@ -36,18 +35,19 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
             Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: CustomColors.btnColor), // Set your border color here
+                border: Border.all(
+                    color: CustomColors.btnColor), // Set your border color here
               ),
               child: CircleAvatar(
                 backgroundColor: CustomColors.btnColor.withOpacity(0.15),
                 child: IconButton(
                   icon: Icon(
                     Icons.arrow_back,
-                    color: CustomColors.btnColor,),
-                  onPressed: (){
+                    color: CustomColors.btnColor,
+                  ),
+                  onPressed: () {
                     Navigator.pop(context);
                   },
-
                 ),
               ),
             ),
@@ -57,7 +57,6 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
               children: [
                 Text(
                   'Enter OTP',
-
                   style: CustomStyle.lightHeading1TextStyle,
                 ),
                 SizedBox(height: 20),
@@ -93,9 +92,16 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
                   },
                 ),
                 SizedBox(height: 20),
-                CustomElevatedButton(text: 'Verify', onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdatePasswordScreen()));
-                }, isValid: true,)
+                CustomElevatedButton(
+                  text: 'Verify',
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => UpdatePasswordScreen()));
+                  },
+                  isValid: true,
+                )
               ],
             ),
           ],
