@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lmizania/colors.dart';
-import 'package:lmizania/cubits/cubit/get_group_members_cubit.dart';
+import 'package:lmizania/cubits/get_group_members_cubit/get_group_members_cubit.dart';
 import 'package:lmizania/cubits/get_profile_cubit/get_profile_cubit.dart';
 import 'package:lmizania/data/models/group_model.dart';
 import 'package:lmizania/group_settings/add_adming_screen.dart';

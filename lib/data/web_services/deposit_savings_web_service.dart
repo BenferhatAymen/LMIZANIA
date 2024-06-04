@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:lmizania/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SetSavingsWebServices {
+class DepositSavingsWebServices {
   late Dio dio;
-  SetSavingsWebServices() {
+  DepositSavingsWebServices() {
     BaseOptions options = BaseOptions(
       baseUrl: baseUrl,
       receiveDataWhenStatusError: true,
@@ -14,15 +14,16 @@ class SetSavingsWebServices {
     dio = Dio(options);
   }
 
-  setSavings({required int amount}) async {
+  depositSavings({required int amount}) async {
     var pref = await SharedPreferences.getInstance();
     String? token = pref.getString('token');
 
     dio.options.headers['Authorization'] = "Bearer $token";
-
     try {
-      Response response =
-          await dio.post('createSaving', data: {"targetAmount": amount});
+      Response response = await dio.post(
+        'depositSaving',
+        data: {"amount": amount},
+      );
       return response.data;
     } catch (e) {
       print(e.toString());

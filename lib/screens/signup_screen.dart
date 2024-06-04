@@ -37,7 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         if (state is RegisterLoading) {
           isLoading = true;
         } else if (state is RegisterSuccess) {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => BottomNavBar()),
           );
@@ -134,15 +134,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         text: 'Sign Up',
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            if(_agreeToTerms){
+                            if (_agreeToTerms) {
                               BlocProvider.of<RegisterCubit>(context)
-                                .RegisterUser(
-                                    email: email!,
-                                    password: password!,
-                                    fullName: fullName!);
-                            }else{
-                                        showSnackBar(context, "Please agree to terms of use");
-
+                                  .RegisterUser(
+                                      email: email!,
+                                      password: password!,
+                                      fullName: fullName!);
+                            } else {
+                              showSnackBar(
+                                  context, "Please agree to terms of use");
                             }
                           }
                         },
@@ -199,7 +199,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       SizedBox(height: 80.h),
                       CustomSeparator(),
-                      CustomGoogleButton(onPressed: () {}),
                       CustomRichText(
                         text: "Already have an account?",
                         style: CustomStyle.lightSubtextTextStyle,

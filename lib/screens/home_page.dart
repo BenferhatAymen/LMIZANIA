@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lmizania/cubits/get_all_transactions_cubit/get_all_transactions_cubit.dart';
+import 'package:lmizania/cubits/get_profile_cubit/get_profile_cubit.dart';
 import 'package:lmizania/screens/all_transactions.dart';
 import 'package:lmizania/screens/bar_chart.dart';
 import 'package:lmizania/screens/bar_screen.dart';
@@ -22,7 +23,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String userName = 'Susan Changi';
   int balance = 5200000;
   int income = 5200000;
   int expense = 1850000;
@@ -32,6 +32,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<GetProfileCubit>(context).getProfile();
+
     updateHomeScreen(context);
     _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       setState(() {
@@ -222,19 +224,29 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(
                           width: 5.w,
                         ),
-                        Container(
-                          constraints:
-                              BoxConstraints(minWidth: 80, maxWidth: 200),
-                          child: Text(
-                            userName,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: TColor.themeColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16.sp,
-                            ),
-                          ),
+                        BlocBuilder<GetProfileCubit, GetProfileState>(
+                          builder: (context, state) {
+                            if (state is GetProfileLoading) {
+                              return CircularProgressIndicator();
+                            } else if (state is GetProfileSuccess) {
+                              return Container(
+                                constraints:
+                                    BoxConstraints(minWidth: 80, maxWidth: 200),
+                                child: Text(
+                                  state.user.firstName!,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: TColor.themeColor,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16.sp,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return Text('Error');
+                            }
+                          },
                         ),
                       ],
                     ),
@@ -249,7 +261,6 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     // updateHomeScreen(context);
                     // Handle notifications here
-                    
                   },
                 ),
               ],

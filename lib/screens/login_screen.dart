@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (state is LoginLoading) {
           isLoading = true;
         } else if (state is LoginSuccess) {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => BottomNavBar()),
           );
@@ -118,9 +118,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       SizedBox(height: Dimensions.topHeight),
                       CustomSeparator(),
-                      CustomGoogleButton(
-                        onPressed: () {},
-                      ),
                       CustomRichText(
                         text: "Don't have an account?",
                         style: CustomStyle.lightSubtextTextStyle,

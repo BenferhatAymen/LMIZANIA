@@ -6,7 +6,8 @@ import 'package:lmizania/cubits/add_expense_cubit/add_expense_cubit_cubit.dart';
 import 'package:lmizania/cubits/add_goal/add_goal_cubit.dart';
 import 'package:lmizania/cubits/add_income_cubit/add_income_cubit.dart';
 import 'package:lmizania/cubits/create_group_cubit/create_group_cubit.dart';
-import 'package:lmizania/cubits/cubit/get_group_members_cubit.dart';
+import 'package:lmizania/cubits/deposit_savings/deposit_savings_cubit.dart';
+import 'package:lmizania/cubits/get_group_members_cubit/get_group_members_cubit.dart';
 import 'package:lmizania/cubits/delete_epense_cubit/delete_expense_cubit.dart';
 import 'package:lmizania/cubits/delete_goal_cubit/delete_goal_cubit.dart';
 import 'package:lmizania/cubits/deposit_goal_cubit/deposit_goal_cubit.dart';
@@ -25,6 +26,8 @@ import 'package:lmizania/cubits/set_wallet_cubit/set_wallet_cubit.dart';
 import 'package:lmizania/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:lmizania/cubits/get_savings_cubit/get_savings_cubit.dart';
+import 'package:lmizania/cubits/set_savings/set_savings_cubit.dart';
 
 void main() async {
   // Locking Device Orientation
@@ -108,6 +111,15 @@ class Lmizania extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => JoinGroupCubit(),
+        ),
+        BlocProvider(
+          create: (context) => GetSavingsCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SetSavingsCubit(),
+        ),
+        BlocProvider(
+          create: (context) => DepositSavingsCubit(),
         ),
       ],
       child: ScreenUtilInit(

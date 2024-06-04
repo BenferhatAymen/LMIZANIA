@@ -134,7 +134,7 @@ class _TransactionListViewState extends State<TransactionListView> {
 
   Widget buildTransactionBottomSheet(TransactionModel transaction) {
     TextEditingController _itemNameController =
-        TextEditingController(text: transaction.type);
+        TextEditingController(text: transaction.name);
     TextEditingController _amountController = TextEditingController(
         text: NumberFormat('#,###').format(transaction.amount) + ' DA');
     TextEditingController _dateController = TextEditingController(
@@ -173,8 +173,6 @@ class _TransactionListViewState extends State<TransactionListView> {
                       color: CustomColors.navorappbar.withOpacity(0.2),
                       borderRadius:
                           const BorderRadius.all(Radius.circular(15))),
-                  // Todo : rigli l icon
-
                   child: Icon(Icons.phone,
                       color: CustomColors.navorappbar,
                       size: Dimensions.iconSizeLarge),
@@ -190,7 +188,7 @@ class _TransactionListViewState extends State<TransactionListView> {
         SizedBox(height: Dimensions.heightSize),
         buildDateElevatedButton(
           Icons.calendar_today,
-          "12 September 2024",
+          transaction.date!.substring(0, 10),
           () {
             _showDatePickerBottomSheet(context);
           },

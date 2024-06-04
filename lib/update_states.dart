@@ -23,4 +23,5 @@ void updateTotalBalanceComponent(BuildContext context) {
 
 void updateGoalsScreen(BuildContext context) {
   BlocProvider.of<GetAllGoalsCubit>(context).getAllGoals();
+  
 }

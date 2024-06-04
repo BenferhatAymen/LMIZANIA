@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lmizania/colors.dart';
+import 'package:lmizania/cubits/get_savings_cubit/get_savings_cubit.dart';
 import 'package:lmizania/group_wallet/group_wallet.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lmizania/screens/Goals.dart';
@@ -21,6 +23,13 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    BlocProvider.of<GetSavingsCubit>(context).getSavings();
+  }
+
   bool _isSelectedPersonal = true;
 
   @override
@@ -140,6 +149,12 @@ class _PersonalWalletScreenState extends State<PersonalWalletScreen> {
   int income = 5200000;
   int expense = 1850000;
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    BlocProvider.of<GetSavingsCubit>(context).getSavings();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CustomColors.bg,
