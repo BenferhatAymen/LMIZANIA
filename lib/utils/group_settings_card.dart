@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lmizania/colors.dart';
+import 'package:lmizania/data/models/group_model.dart';
 import 'package:lmizania/group_settings/group_setting_view.dart';
 
 class GroupSettingsCard extends StatelessWidget {
-  Map<String, dynamic> groupData;
+  GroupModel groupData;
 
   GroupSettingsCard({super.key, required this.groupData});
 
@@ -29,13 +30,13 @@ class GroupSettingsCard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundImage: AssetImage(groupData['icon']),
+            backgroundImage: AssetImage(groupData.image ?? "images/family.png"),
           ),
           SizedBox(
             width: 10,
           ),
           Text(
-            groupData["name"],
+            groupData.name!,
             style: TextStyle(
               color: TColor.themeColor,
               fontSize: 19,
@@ -44,12 +45,11 @@ class GroupSettingsCard extends StatelessWidget {
           ),
           Spacer(),
           GestureDetector(
-            // Todo : implement navigation to group settings
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GroupSettingsView(),
+                  builder: (context) => GroupSettingsView(groupData: groupData),
                 ),
               );
             },

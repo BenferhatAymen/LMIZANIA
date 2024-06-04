@@ -108,8 +108,6 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                   Navigator.of(context).pop();
                   updateHomeScreen(context);
                 }
-
-                 
               },
             ),
           ),
@@ -349,7 +347,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                     looping: true,
                     firstDate: DateTime(DateTime.now().year - 1),
                     lastDate: DateTime.now(),
-                    initialDate: DateTime(2020, 1, 1), // DateTime(1994),
+                    initialDate: DateTime.now(), // DateTime(1994),
                     dateFormat: "MMMM/dd/yyyy",
                     locale: DatePicker.localeFromString('en'),
                     onChange: (DateTime newDate, _) {

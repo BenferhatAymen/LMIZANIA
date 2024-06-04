@@ -17,17 +17,21 @@ class RegisterWebServices {
       required String password,
       required String fullName}) async {
     try {
-       Response response = await dio.post('register', data: {
+      print("slm");
+      Response response = await dio.post('register', data: {
         "email": email,
         "password": password,
         "firstName": fullName,
         "lastName": fullName,
+        "confirmPassword": password,
+        "gender": "Male",
+        "dateOfBirth": "2004-06-02"
       });
+      print("cc");
       return response.data;
     } catch (e) {
- 
       print(e.toString());
- 
+
       return;
     }
   }

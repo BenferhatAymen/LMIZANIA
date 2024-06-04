@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lmizania/colors.dart';
@@ -14,6 +15,8 @@ import 'package:lmizania/utils/input_section.dart';
 import 'package:lmizania/utils/segment_button.dart';
 import 'package:lmizania/utils/transaction_card.dart';
 import 'package:lmizania/utils/transaction_section.dart';
+import 'dart:ffi';
+import 'dart:io';
 
 class EditPersonalGoalScreen extends StatefulWidget {
   @override
@@ -36,6 +39,9 @@ class _EditPersonalGoalScreenState extends State<EditPersonalGoalScreen> {
     goalDescriptionController =
         TextEditingController(text: widget.goal.description);
   }
+
+  XFile? image;
+  String? downloadURL;
 
   @override
   Widget build(BuildContext context) {
@@ -60,24 +66,88 @@ class _EditPersonalGoalScreenState extends State<EditPersonalGoalScreen> {
           padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
           child: Column(
             children: [
-              Container(
-                alignment: Alignment.center,
-                height: media.width * 0.82,
-                width: media.width * 0.82,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  image: DecorationImage(
-                    image: AssetImage(
-                      "images/laptop.png",
-                    ),
-                    fit: BoxFit.fill,
-                  ),
-                  border: Border.all(
-                    width: 2,
-                    color: TColor.themeColor.withOpacity(0.5),
-                  ),
-                ),
+              GestureDetector(
+                onTap: () async {
+                  ImagePicker imagePicker = ImagePicker();
+                  image =
+                      await imagePicker.pickImage(source: ImageSource.gallery);
+                  setState(() {});
+                  String uniqueId =
+                      DateTime.now().millisecondsSinceEpoch.toString();
+                  Reference referenceImageDir =
+                      FirebaseStorage.instance.ref().child("goal_images");
+                  Reference fileRef = referenceImageDir.child(uniqueId);
+                  try {
+                    await fileRef.putFile(File(image!.path));
+                    downloadURL = await fileRef.getDownloadURL();
+                    print(downloadURL ?? "no url");
+                  } catch (e) {
+                    print(downloadURL ?? "no url");
+
+                    print(e);
+                  }
+                },
+                child: widget.goal.image == "no image" && image == null
+                    ? Container(
+                        alignment: Alignment.center,
+                        height: media.width * 0.82,
+                        width: media.width * 0.82,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: TColor.themeColor.withOpacity(0.5),
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              "images/Vector.png",
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              "Add a photo of your goal",
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.5),
+                                  fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      )
+                    : image != null
+                        ? Container(
+                            alignment: Alignment.center,
+                            height: media.width * 0.82,
+                            width: media.width * 0.82,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: TColor.themeColor.withOpacity(0.5),
+                              ),
+                              image: DecorationImage(
+                                image: FileImage(File(image!.path)),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                        : Container(
+                            alignment: Alignment.center,
+                            height: media.width * 0.82,
+                            width: media.width * 0.82,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: TColor.themeColor.withOpacity(0.5),
+                              ),
+                              image: DecorationImage(
+                                image: NetworkImage(widget.goal.image!),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
               ),
               SizedBox(
                 height: 15,

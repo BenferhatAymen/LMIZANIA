@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lmizania/colors.dart';
 
 class TextAlertDialog extends StatelessWidget {
-  TextAlertDialog({super.key, this.onSave, this.title = "Create Group"});
+  TextAlertDialog({super.key, this.onSave, this.title = "Create Group",this.onChanged});
   VoidCallback? onSave;
+  Function(String)? onChanged;
   String title;
   @override
   Widget build(BuildContext context) {
@@ -31,6 +32,7 @@ class TextAlertDialog extends StatelessWidget {
               padding: EdgeInsets.zero,
               width: media.width * 0.9,
               child: TextField(
+                onChanged: onChanged,
                 style: TextStyle(color: Colors.black, fontSize: 20),
                 autofocus: true,
                 decoration: InputDecoration(
@@ -40,7 +42,7 @@ class TextAlertDialog extends StatelessWidget {
                   enabledBorder: InputBorder.none,
                   errorBorder: InputBorder.none,
                   disabledBorder: InputBorder.none,
-                ),
+                 ),
               ),
             ),
           ),

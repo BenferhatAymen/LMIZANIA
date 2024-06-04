@@ -39,7 +39,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
       name: "hmida",
       type: "income",
       amount: 20,
-      date: "04-04-2024",
+      date: "26-05-2024",
       category: "Food",
       id: "1",
     ),
@@ -196,6 +196,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
     Colors.pink,
     Colors.lightGreen
   ];
+  int timeinitialLabelIndex = 0;
   @override
   Widget build(BuildContext context) {
     List<CategoryModel> categories = incomeCategories;
@@ -278,6 +279,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                 : expenseTransactions,
                             isIncome:
                                 (categoryInitialLabelindex == 0 ? true : false),
+                            index: timeinitialLabelIndex,
                           )
                         : PieChartWidget(
                             categories: (categoryInitialLabelindex == 0)
@@ -329,21 +331,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
               SizedBox(
                 height: Dimensions.heightSize,
               ),
-              Container(
-                color: Colors.white,
-                child: Column(
-                  children: categories
-                      .map((category) => _buildCategoryItem(
-                            category.name!,
-                            category.amount!.toDouble(),
-                            progressBarColors[categories.indexOf(category) %
-                                progressBarColors.length],
-                            progressBarColors[categories.indexOf(category) %
-                                progressBarColors.length],
-                          ))
-                      .toList(),
-                ),
-              ),
+              buildCategories((categoryInitialLabelindex == 0)
+                  ? incomeCategories
+                  : expenseCategories),
             ],
           ),
         ),
@@ -351,27 +341,45 @@ class _StatisticsPageState extends State<StatisticsPage> {
     );
   }
 
+  Container buildCategories(List<CategoryModel> categories) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: categories
+            .map((category) => _buildCategoryItem(
+                  category.name!,
+                  category.amount!.toDouble(),
+                  progressBarColors[
+                      categories.indexOf(category) % progressBarColors.length],
+                  progressBarColors[
+                      categories.indexOf(category) % progressBarColors.length],
+                ))
+            .toList(),
+      ),
+    );
+  }
+
   ToggleSwitch switchbetweendays() {
     return ToggleSwitch(
-      minWidth: 75.0,
+      minWidth: 200,
       cornerRadius: 20.0,
       activeBgColors: const [
         [CustomColors.navorappbar],
         const [CustomColors.navorappbar],
         [CustomColors.navorappbar],
-        [CustomColors.navorappbar],
-        [CustomColors.navorappbar],
-        [CustomColors.navorappbar]
       ],
       activeFgColor: Colors.white,
       inactiveBgColor: Colors.white,
       inactiveFgColor: Colors.black,
-      initialLabelIndex: 0,
-      totalSwitches: 5,
-      labels: const ['Day', 'Week', 'Month', 'Year', 'All'],
+      initialLabelIndex: timeinitialLabelIndex,
+      totalSwitches: 2,
+      labels: const ['Week', 'Year'],
       radiusStyle: true,
       onToggle: (index) {
         print('switched to: $index');
+        setState(() {
+          timeinitialLabelIndex = index!;
+        });
       },
     );
   }

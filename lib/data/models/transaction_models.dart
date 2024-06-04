@@ -38,13 +38,6 @@ int getWeekOfMonth(DateTime date) {
   return ((date.day + firstWeekday - 1) / 7).ceil();
 }
 
-bool isInLastWeek(DateTime date) {
-  final now = DateTime.now();
-  final startOfWeek = now.subtract(Duration(days: now.weekday));
-  final endOfWeek = startOfWeek.add(Duration(days: 7));
-  return date.isAfter(startOfWeek) && date.isBefore(endOfWeek);
-}
-
 bool isInLastMonth(DateTime date) {
   final now = DateTime.now();
   final firstDayOfLastMonth = DateTime(now.year, now.month - 1, 1);
@@ -72,54 +65,54 @@ List<Map<String, int>> sumByMonth(List<TransactionModel> transactions) {
   return monthlySums.entries.map((entry) => {entry.key: entry.value}).toList();
 }
 
-List<Map<String, int>> sumByWeekOfLastMonth(
-    List<TransactionModel> transactions) {
-  final Map<String, int> weeklySums = {};
+// List<Map<String, int>> sumByWeekOfLastMonth(
+//     List<TransactionModel> transactions) {
+//   final Map<String, int> weeklySums = {};
 
-  for (var transaction in transactions) {
-    if (transaction.date != null && transaction.amount != null) {
-      final date = parseDate(transaction.date!);
-      if (isInLastMonth(date)) {
-        final weekKey = 'Week ${getWeekOfMonth(date)}';
+//   for (var transaction in transactions) {
+//     if (transaction.date != null && transaction.amount != null) {
+//       final date = parseDate(transaction.date!);
+//       if (isInLastMonth(date)) {
+//         final weekKey = 'Week ${getWeekOfMonth(date)}';
 
-        if (!weeklySums.containsKey(weekKey)) {
-          weeklySums[weekKey] = 0;
-        }
+//         if (!weeklySums.containsKey(weekKey)) {
+//           weeklySums[weekKey] = 0;
+//         }
 
-        weeklySums[weekKey] = weeklySums[weekKey]! + transaction.amount!;
-      }
-    }
-  }
+//         weeklySums[weekKey] = weeklySums[weekKey]! + transaction.amount!;
+//       }
+//     }
+//   }
 
-  return weeklySums.entries.map((entry) => {entry.key: entry.value}).toList();
-}
+//   return weeklySums.entries.map((entry) => {entry.key: entry.value}).toList();
+// }
 
-List<Map<String, int>> sumByDayOfLastWeek(List<TransactionModel> transactions) {
-  final Map<String, int> dailySums = {};
+// List<Map<String, int>> sumByDayOfLastWeek(List<TransactionModel> transactions) {
+//   final Map<String, int> dailySums = {};
 
-  for (var transaction in transactions) {
-    if (transaction.date != null && transaction.amount != null) {
-      final date = parseDate(transaction.date!);
-      if (isInLastWeek(date)) {
-        final dayKey = DateFormat('EEEE').format(date);
+//   for (var transaction in transactions) {
+//     if (transaction.date != null && transaction.amount != null) {
+//       final date = parseDate(transaction.date!);
+//       if (isInLastWeek(date)) {
+//         final dayKey = DateFormat('dd-MM-yyyy').format(date);
 
-        if (!dailySums.containsKey(dayKey)) {
-          dailySums[dayKey] = 0;
-        }
+//         if (!dailySums.containsKey(dayKey)) {
+//           dailySums[dayKey] = 0;
+//         }
 
-        dailySums[dayKey] = dailySums[dayKey]! + transaction.amount!;
-      }
-    }
-  }
+//         dailySums[dayKey] = dailySums[dayKey]! + transaction.amount!;
+//       }
+//     }
+//   }
 
-  return dailySums.entries.map((entry) => {entry.key: entry.value}).toList();
-}
+//   return dailySums.entries.map((entry) => {entry.key: entry.value}).toList();
+// }
 
 List<Map<String, int>> getMonthlyTransactionSums(
-    List<TransactionModel> transactions) {
+    List<TransactionModel> transactions, String type) {
   Map<String, int> monthlySums = {};
 
-  DateFormat dateFormat = DateFormat('dd-MM-yyyy');
+  DateFormat dateFormat = DateFormat('yyyy-MM-dd');
   List<String> months = [
     'Jan',
     'Feb',
@@ -136,7 +129,9 @@ List<Map<String, int>> getMonthlyTransactionSums(
   ];
 
   for (var transaction in transactions) {
-    if (transaction.date != null && transaction.amount != null) {
+    if (transaction.date != null &&
+        transaction.amount != null &&
+        transaction.type == type) {
       DateTime date = dateFormat.parse(transaction.date!);
       String month =
           DateFormat('MMM').format(date); // Get abbreviated month name
@@ -150,4 +145,57 @@ List<Map<String, int>> getMonthlyTransactionSums(
   }
 
   return months.map((month) => {month: monthlySums[month] ?? 0}).toList();
+}
+
+List<String> days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+bool isInLastWeek(DateTime date) {
+  final now = DateTime.now();
+  final startOfThisWeek = now.subtract(Duration(days: now.weekday - 1));
+  final startOfLastWeek = startOfThisWeek.subtract(Duration(days: 7));
+  final endOfLastWeek = startOfThisWeek.subtract(Duration(days: 1));
+  return date.isAfter(startOfLastWeek) &&
+      date.isBefore(endOfLastWeek.add(Duration(days: 1)));
+}
+
+// DateTime parseDate(String dateString) {
+//   return DateFormat('yyyy-MM-dd').parse(dateString);
+// }
+
+List<Map<String, int>> sumByDayOfLastWeek(
+    List<TransactionModel> transactions, String type) {
+  final Map<String, int> dailySums = {};
+
+  for (var transaction in transactions) {
+    if (transaction.date != null &&
+        transaction.amount != null &&
+        transaction.type == type) {
+      final date = parseDate(transaction.date!);
+      if (isInLastWeek(date)) {
+        final dayKey = DateFormat('EEE')
+            .format(date); // Get abbreviated day name (Sun, Mon, etc.)
+
+        if (!dailySums.containsKey(dayKey)) {
+          dailySums[dayKey] = 0;
+        }
+
+        dailySums[dayKey] = dailySums[dayKey]! + transaction.amount!;
+      }
+    }
+  }
+
+  // Ensure all days of the week are present in the result
+  return days.map((day) => {day: dailySums[day] ?? 0}).toList();
+}
+
+int getTotalTransactionSum(List<TransactionModel> transactions, String type) {
+  int totalSum = 0;
+
+  for (var transaction in transactions) {
+    if (transaction.amount != null && transaction.type == type) {
+      totalSum += transaction.amount!;
+    }
+  }
+
+  return totalSum;
 }

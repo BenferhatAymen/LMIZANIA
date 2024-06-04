@@ -3,15 +3,18 @@ import 'package:lmizania/colors.dart';
 
 class GenderBottomSheet extends StatefulWidget {
   @override
+  Function(bool)? onChanged;
+  String gender;
+  GenderBottomSheet({this.onChanged, required this.gender});
   State<GenderBottomSheet> createState() => _GenderBottomSheetState();
 }
 
 class _GenderBottomSheetState extends State<GenderBottomSheet> {
-  late bool isFemale;
+  late bool isMale;
   @override
   void initState() {
     super.initState();
-    isFemale = true;
+    isMale = widget.gender == "Male";
   }
 
   @override
@@ -36,10 +39,10 @@ class _GenderBottomSheetState extends State<GenderBottomSheet> {
           ),
           GenderRow(
             gender: "Male",
-            isSelected: !isFemale,
+            isSelected: isMale,
             onTap: () {
               setState(() {
-                isFemale = false;
+                isMale = true;
               });
             },
           ),
@@ -51,10 +54,10 @@ class _GenderBottomSheetState extends State<GenderBottomSheet> {
           ),
           GenderRow(
             gender: "Female",
-            isSelected: isFemale,
+            isSelected: !isMale,
             onTap: () {
               setState(() {
-                isFemale = true;
+                isMale = false;
               });
             },
           ),
@@ -66,6 +69,7 @@ class _GenderBottomSheetState extends State<GenderBottomSheet> {
             height: media.height * 0.08,
             child: ElevatedButton(
               onPressed: () {
+                widget.onChanged!(isMale);
                 Navigator.pop(context);
               },
               child: Text(

@@ -480,7 +480,7 @@ class TransactionItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  transaction.category!,
+                  transaction.name!,
                   style: TextStyle(
                     color: TColor.themeColor,
                     fontSize: 17,
@@ -492,7 +492,7 @@ class TransactionItem extends StatelessWidget {
                 ),
                 SizedBox(height: 5),
                 Text(
-                  transaction.type!,
+                  transaction.category!,
                   style: TextStyle(
                     color: TColor.themeColor,
                     fontSize: 15,

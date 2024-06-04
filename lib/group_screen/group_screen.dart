@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lmizania/add_goal/add_goal_screen.dart';
 import 'package:lmizania/all_transactions_group/all_transactions_group_view.dart';
 import 'package:lmizania/colors.dart';
+import 'package:lmizania/data/models/group_model.dart';
 import 'package:lmizania/edit_goal/edit_goal_screen.dart';
 import 'package:lmizania/utils/desposit_alert_dialog.dart';
 import 'package:lmizania/utils/goal_row.dart';
@@ -15,6 +16,8 @@ import '../add_new_transaction/add_new_transaction_view.dart';
 
 class GroupScreenView extends StatefulWidget {
   @override
+  GroupModel groupData;
+  GroupScreenView({required this.groupData});
   State<GroupScreenView> createState() => _GroupScreenViewState();
 }
 
@@ -105,7 +108,7 @@ class _GroupScreenViewState extends State<GroupScreenView> {
                 height: 15,
               ),
               GroupSettingsCard(
-                groupData: groupData,
+                groupData: widget.groupData,
               ),
               SizedBox(
                 height: 10,

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lmizania/add_goal/add_goal_screen.dart';
 import 'package:lmizania/colors.dart';
+import 'package:lmizania/cubits/create_group_cubit/create_group_cubit.dart';
+import 'package:lmizania/cubits/get_all_groups_cubit/get_all_groups_cubit.dart';
+import 'package:lmizania/data/models/group_model.dart';
 import 'package:lmizania/group_screen/group_screen.dart';
 import 'package:lmizania/settings_view/settings_view.dart';
 import 'package:lmizania/utils/Group_card.dart';
@@ -30,6 +34,14 @@ class _GroupWalletViewState extends State<GroupWalletView> {
     {"name": "Estin Boys", "members": 16, "icon": "images/family.png"},
     {"name": "Chabiba", "members": "3", "icon": "images/2cp5.png"},
   ];
+  String? groupName;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    BlocProvider.of<GetAllGroupsCubit>(context).getAllGroups();
+  }
+
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
@@ -60,7 +72,21 @@ class _GroupWalletViewState extends State<GroupWalletView> {
                         context: context,
                         builder: (BuildContext context) {
                           return TextAlertDialog(
-                            onSave: () {},
+                            onChanged: (string) {
+                              groupName = string;
+                            },
+                            onSave: () async {
+                              BlocProvider.of<CreateGroupCubit>(context)
+                                  .createGroup(
+                                name: groupName!,
+                                image: "images/family.png",
+                              );
+                              await Future.delayed(Duration(milliseconds: 200));
+
+                              BlocProvider.of<GetAllGroupsCubit>(context)
+                                  .getAllGroups();
+                              Navigator.pop(context);
+                            },
                           );
                         },
                       );
@@ -76,22 +102,38 @@ class _GroupWalletViewState extends State<GroupWalletView> {
               SizedBox(
                 height: 10,
               ),
-              ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: groupsData.length,
-                itemBuilder: (context, index) {
-                  var sObject = groupsData[index] as Map<String, dynamic>;
+              BlocBuilder<GetAllGroupsCubit, GetAllGroupsState>(
+                builder: (context, state) {
+                  if (state is GetAllGroupsLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is GetAllGroupsSuccess) {
+                    return ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: state.groups.length,
+                      itemBuilder: (context, index) {
+                        var sObject = state.groups[index] as GroupModel;
 
-                  return GroupCard(
-                    groupData: sObject,
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => GroupScreenView()));
-                    },
-                  );
+                        return GroupCard(
+                          groupData: sObject,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => GroupScreenView(
+                                          groupData: sObject,
+                                        )));
+                          },
+                        );
+                      },
+                    );
+                  } else {
+                    return Center(
+                      child: Text("No Groups Found"),
+                    );
+                  }
                 },
               ),
             ],

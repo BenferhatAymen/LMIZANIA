@@ -17,12 +17,6 @@ class _EnterOTPScreenState extends State<EnterOTPScreen> {
   final TextEditingController _otpController = TextEditingController();
 
   @override
-  void dispose() {
-    _otpController.dispose(); // Dispose of the TextEditingController
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(

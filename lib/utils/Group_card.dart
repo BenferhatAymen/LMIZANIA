@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lmizania/colors.dart';
+import 'package:lmizania/data/models/group_model.dart';
 
 class GroupCard extends StatelessWidget {
-  Map<String, dynamic> groupData;
+  GroupModel groupData;
   VoidCallback onTap;
 
   GroupCard({super.key, required this.groupData, required this.onTap});
@@ -31,13 +32,14 @@ class GroupCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 18,
-              backgroundImage: AssetImage(groupData['icon']),
+              backgroundImage:
+                  AssetImage(groupData.image ?? "images/family.png"),
             ),
             SizedBox(
               width: 10,
             ),
             Text(
-              groupData["name"],
+              groupData.name!,
               style: TextStyle(
                 color: TColor.themeColor,
                 fontSize: 19,
@@ -46,7 +48,7 @@ class GroupCard extends StatelessWidget {
             ),
             Spacer(),
             Text(
-              '${groupData["members"]} members',
+              '${groupData.members!.length} members',
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 14,

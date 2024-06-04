@@ -5,14 +5,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lmizania/cubits/add_expense_cubit/add_expense_cubit_cubit.dart';
 import 'package:lmizania/cubits/add_goal/add_goal_cubit.dart';
 import 'package:lmizania/cubits/add_income_cubit/add_income_cubit.dart';
+import 'package:lmizania/cubits/create_group_cubit/create_group_cubit.dart';
+import 'package:lmizania/cubits/cubit/get_group_members_cubit.dart';
 import 'package:lmizania/cubits/delete_epense_cubit/delete_expense_cubit.dart';
 import 'package:lmizania/cubits/delete_goal_cubit/delete_goal_cubit.dart';
 import 'package:lmizania/cubits/deposit_goal_cubit/deposit_goal_cubit.dart';
+import 'package:lmizania/cubits/edit_profile_cubit/edit_profile_cubit.dart';
 import 'package:lmizania/cubits/get_all_expense_cubit/get_all_expense_cubit.dart';
 import 'package:lmizania/cubits/get_all_goals_cubit/get_all_goals_cubit.dart';
+import 'package:lmizania/cubits/get_all_groups_cubit/get_all_groups_cubit.dart';
 import 'package:lmizania/cubits/get_all_income_cubit/get_all_income_cubit.dart';
 import 'package:lmizania/cubits/get_all_transactions_cubit/get_all_transactions_cubit.dart';
+import 'package:lmizania/cubits/get_profile_cubit/get_profile_cubit.dart';
 import 'package:lmizania/cubits/get_wallet/get_wallet_cubit.dart';
+import 'package:lmizania/cubits/join_group_cubit/join_group_cubit.dart';
 import 'package:lmizania/cubits/register_cubit/register_cubit.dart';
 import 'package:lmizania/cubits/login_cubit/login_cubit.dart';
 import 'package:lmizania/cubits/set_wallet_cubit/set_wallet_cubit.dart';
@@ -84,6 +90,24 @@ class Lmizania extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => DeleteGoalCubit(),
+        ),
+        BlocProvider(
+          create: (context) => GetProfileCubit(),
+        ),
+        BlocProvider(
+          create: (context) => EditProfileCubit(),
+        ),
+        BlocProvider(
+          create: (context) => GetAllGroupsCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CreateGroupCubit(),
+        ),
+        BlocProvider(
+          create: (context) => GetGroupMembersCubit(),
+        ),
+        BlocProvider(
+          create: (context) => JoinGroupCubit(),
         ),
       ],
       child: ScreenUtilInit(

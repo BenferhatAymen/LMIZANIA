@@ -44,7 +44,9 @@ class GoalListItem extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => EditPersonalGoalScreen(goal: goal,),
+            builder: (context) => EditPersonalGoalScreen(
+              goal: goal,
+            ),
           ),
         );
       },
@@ -58,10 +60,15 @@ class GoalListItem extends StatelessWidget {
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 minVerticalPadding: 2,
-                leading: CircleAvatar(
-                  backgroundColor: Colors.grey,
-                  radius: 26,
-                ),
+                leading: goal.image == null
+                    ? CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        radius: 26,
+                      )
+                    : CircleAvatar(
+                        backgroundImage: NetworkImage(goal.image!),
+                        radius: 26,
+                      ),
                 title: Text(
                   goal.name!,
                   style: TextStyle(
